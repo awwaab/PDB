@@ -1,7 +1,32 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 .heads{
-	color:#ffeb3b;
+	color:#000;   
 }
 
+.white-box{
+  color:#fff;   
+}
+
+.categorical{
+     background-image:url("categorical.jpg");   
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 100%;
+    min-height :100%;
+}
+
+.body{
+ font-family: 'Roboto', sans-serif;   
+}
+
+.debate-background{
+    background-image:url("background-img.jpg");   
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 100%;
+    min-height :100%;
+}
 .col.awalmenu{
 	margin-left:10px;
 	margin-right:10px;

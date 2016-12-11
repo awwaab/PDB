@@ -11,13 +11,15 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
-    <body class="light-blue darken-4">
+    <body class="categorical">
+        <a href="index.html">BACK</a>
       <!--Import jQuery before materialize.js-->
 
-      <div class="container ">
+      <div class="container white-box">
         
         <div class="row title">
-          <h1 class ="heads center-align">United States Presidential Debate</h1>
+          <h1 class ="heads center-align">Economy</h1>
+            <p>Everything that our candidates debate about economy</p>
         </div>
         <div class="row">
         <?php 
@@ -25,7 +27,10 @@
           $file =  fread($myfile,filesize("Text.csv"));
           
           $entityLists = explode("\n", $file); //9/26/16#9#Clinton#So let's have paid family leave, earned sick days#Economic
-          echo "<div class = 'col s6 content'>";
+          
+
+         echo "<div class = 'col s6 content'>";
+            echo "<p> HILLARY CLINTON </p>";
           foreach ($entityLists as $entity) {
              
              $entitySplitted = explode("#", $entity);
@@ -37,12 +42,15 @@
              $tag = trim($entitySplitted[4]);
             
              if ($speaker == "Clinton" and $tag == "Economic")
-                  echo "<p> $content </p>";
+                 echo "<p> $content </p>";
               
            
           }
           echo "</div>";
+
+
           echo "<div class = 'col s6 content'>";
+            echo "<p> DONALD TRUMP </p>";
             foreach ($entityLists as $entity) {
              
              $entitySplitted = explode("#", $entity);
@@ -55,7 +63,7 @@
             
              
              if ($speaker == "Trump" and $tag == "Economic")
-                echo "<p> $content </p>";
+                 echo "<p> $content </p>";
           }
 
           echo "</div>";
