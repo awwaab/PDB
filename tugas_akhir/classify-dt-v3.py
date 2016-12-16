@@ -28,7 +28,19 @@ def parseLine(line):
 # Put Data to DataFrame
 
 data_mapped = sc.textFile('output-fix.txt').map(parseLine)
-data = data_mapped.toDF(['label', 'value'])
+trainingData = data_mapped.toDF(['label', 'value'])
+
+
+# Put Data From Web to Dataframe
+
+web_data_mapped = sc.textFile('input-web.txt').map(parseLine)
+testData = web_data_mapped.toDF(['label', 'value'])
+
+#web_data.show()
+
+#fixed_data = data.unionAll(web_data)
+
+#fixed_data.show()
 
 
 # Removing Stop Words
@@ -41,10 +53,22 @@ remover = StopWordsRemover(inputCol=tokenizer.getOutputCol(), outputCol="filtere
 
 hashingTF = HashingTF(inputCol=remover.getOutputCol(), outputCol="features", numFeatures=20)
 
-labelIndexer = StringIndexer(inputCol = "label", outputCol = "indexedLabel").fit(data)
+labelIndexer = StringIndexer(inputCol = "label", outputCol = "indexedLabel").fit(trainingData)
+
+dataIndexed = labelIndexer.fit(trainingData).transform(trainingData)
+
+dataIndexed.show()
+
 # Defining Model PIPELINE
 
-(trainingData, testData) = data.randomSplit([0.7, 0.3])
+#(trainingData, testData) = data.randomSplit([0.7, 0.3])
+
+#trainingData = data[:-1]
+#testData = data[-1]
+
+trainingData.show()
+testData.show()
+
 dt = DecisionTreeClassifier(labelCol="indexedLabel", featuresCol="features")
 
 
@@ -67,6 +91,15 @@ predictions = model.transform(testData)
 
 predictions.select("prediction", "indexedLabel", "features").show(5)
 
+sh: indent: command not found
+its = IndexToString(inputCol="prediction", outputCol="stringPrediction", labels=dt.labelCol)
+
+pred = its.transform(predictions)
+
+pred.show()
+
+for line in predictions.collect():
+	print line	
 
 # Select (prediction, true label) and compute test error
 
@@ -79,5 +112,4 @@ treeModel = model.stages[4]
 # summary only
 print(treeModel)
 
-sc.parallelize(Seq(treeModel), 1).saveAsObjectFile("dt.model")
 
