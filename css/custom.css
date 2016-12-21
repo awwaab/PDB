@@ -4,12 +4,15 @@
 	color:#000;   
 }
 
+
+.heads-topics{
+	color:#000;   
+}
 .white-box{
   color:#fff;   
 }
 
 .categorical{
-     background-image:url("categorical.jpg");   
     background-repeat: no-repeat;
     background-position: right top;
     background-size: 100%;
@@ -47,7 +50,27 @@
 	margin-top: 200px;
 }
 
+.title-cst{
+	color: #b71c1c;
+}
+
 .catSelector{
 	margin-top: 50px;
 }
+
+.flexible{
+	display: flex;
+  	justify-content: center;
+  	flex-direction: column;
+
+}
+
+.row .col.s6-mod {
+    width: 48%;
+    margin-left: 10px;
+    margin-right: 10px;
+    left: auto;
+    right: auto;
+}
+
 
