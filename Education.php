@@ -18,8 +18,8 @@
       <div class="container white-box">
         
         <div class="row">
-          <h1 class ="heads-topics center-align">Economy</h1>
-          <h3 class ="heads-topics center-align">Everything they said about the economy</h3>
+          <h1 class ="heads-topics center-align">Education</h1>
+          <h3 class ="heads-topics center-align">Everything they said about education</h3>
            
         </div>
         <div class="row">
@@ -46,11 +46,11 @@
              $content = $entitySplitted[3];
              $tag = trim($entitySplitted[4]);
             
-            if ($speaker == "Clinton" and $tag == "1.0" and $countClinton%2 ==0){
+            if ($speaker == "Clinton" and $tag == "6.0" and $countClinton%2 ==0){
                  echo "<p class='amber-text text-lighten-3'> $content </p>";
                  $countClinton += 1;
                }
-             elseif ($speaker == "Clinton" and $tag == "1.0" and $countClinton%2 ==1){
+             elseif ($speaker == "Clinton" and $tag == "6.0" and $countClinton%2 ==1){
                  echo "<p> $content </p>";
                  $countClinton += 1;
              }
@@ -74,11 +74,11 @@
              $tag = trim($entitySplitted[4]);
             
              
-             if ($speaker == "Trump" and $tag == "1.0" and $countTrump%2 ==0){
+             if ($speaker == "Trump" and $tag == "6.0" and $countTrump%2 ==0){
                  echo "<p class='amber-text text-lighten-3'> $content </p>";
                  $countTrump += 1;
                }
-             elseif ($speaker == "Trump" and $tag == "1.0" and $countTrump%2 ==1){
+             elseif ($speaker == "Trump" and $tag == "6.0" and $countTrump%2 ==1){
                  echo "<p> $content </p>";
                  $countTrump += 1;
              }

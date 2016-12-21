@@ -11,13 +11,13 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
-    <body class="light-blue darken-4">
+    <body class="grey lighten-4">
       <!--Import jQuery before materialize.js-->
 
       <div class="container ">
         
         <div class="row title">
-          <h1 class ="heads center-align">United States Presidential Debate</h1>
+          <h1 class ="heads center-align title-cst">United States Presidential Debate</h1>
         </div>
          <div class="row">
             <form class="col s12" action="inputProcessor.php" method="post">
@@ -41,7 +41,7 @@
               </div>
               <div class="row">
                 <div class="input-field col s6 offset-s3">
-                  <input class="btn waves-effect waves-light col s12" type="submit" name="action"> </input>
+                  <button class="btn waves-effect waves-light col s12" type="submit" name="action">Send!</button>
                 </div>
               </div>
             </form>
