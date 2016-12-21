@@ -30,7 +30,7 @@ def parseLine2(line):
     parts = line.split('#')
     label = float(parts[4])
     value  = parts[3]
-    return ("1.0",value)
+    return ("1.0", parts[2], value)
 
 # Put Data to DataFrame
 
@@ -93,7 +93,7 @@ model = dt.fit(hashed)
 
 # Put Data From Web to Dataframe
 web_data_mapped = sc.textFile('/input-web.txt').map(parseLine2)
-testData = web_data_mapped.toDF(['label','value'])
+testData = web_data_mapped.toDF(['label', 'person', 'value'])
 
 testData.show()
 
@@ -119,4 +119,4 @@ predicts = model.transform(hashed)
 predicts.show(5)
 
 joined = labelLookup.join(predicts, labelLookup.indexedLabel == predicts.prediction)
-joined.select('originalCategory', 'value').write.format('com.databricks.spark.csv').save('/result',header = 'false')
+joined.select('originalCategory', 'person', 'value').write.format('com.databricks.spark.csv').save('/result',header = 'false')

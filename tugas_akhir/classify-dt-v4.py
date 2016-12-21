@@ -76,8 +76,6 @@ print("Test Accuracy = %g " % (accuracy))
 
 treeModel = model.stages[4]
 
-treeModel.save(sc, "Model")
-
 # summary only
 print(treeModel)
 
