@@ -7,6 +7,7 @@ from pyspark.ml.classification import DecisionTreeClassifier
 from pyspark.ml.feature import StringIndexer, VectorIndexer
 from pyspark.ml.feature import StopWordsRemover
 from pyspark.ml.feature import *
+from pyspark.ml.classification import *
 from pyspark.mllib.tree import DecisionTree, DecisionTreeModel
 from pyspark.mllib.regression import LabeledPoint
 
@@ -29,7 +30,7 @@ def parseLine2(line):
     parts = line.split('#')
     label = float(parts[4])
     value  = parts[3]
-    return ("halo",value)
+    return ("1.0",value)
 
 # Put Data to DataFrame
 
@@ -41,8 +42,6 @@ labelIndexer = StringIndexer(inputCol = "label", outputCol = "indexedLabel").fit
 
 dataIndexed = labelIndexer.transform(trainingData)
 
-dataIndexed.show()
-
 
 # reverse the index
 
@@ -51,6 +50,7 @@ converted = converter.transform(dataIndexed)
 
 converted.show()
 
+labelLookup = converted.dropDuplicates(['indexedLabel', 'originalCategory']).select('indexedLabel', 'originalCategory')
 
 # something
 
@@ -80,22 +80,22 @@ def labeling (line):
 
 # DT Model
 
-dt = DecisionTreeClassifier(labelCol="indexedLabel", featuresCol="features")
+dt = NaiveBayes(smoothing=1.0, modelType="multinomial", labelCol="indexedLabel", featuresCol="features")
 
 
 # Train The Model
 
 model = dt.fit(hashed)
 
-
-####################################
 ###############MODEL SUDAH DILATIH
 ############## MENGELOLA DATA DARI USER SEKARANG
 ##################################################
 
 # Put Data From Web to Dataframe
-web_data_mapped = sc.textFile('input-web.txt').map(parseLine2)
-testData = web_data_mapped.toDF(['nilai','value'])
+web_data_mapped = sc.textFile('/input-web.txt').map(parseLine2)
+testData = web_data_mapped.toDF(['label','value'])
+
+testData.show()
 
 # something
 
@@ -117,3 +117,6 @@ hashed = hashingTF.transform(removed)
 
 predicts = model.transform(hashed)
 predicts.show(5)
+
+joined = labelLookup.join(predicts, labelLookup.indexedLabel == predicts.prediction)
+joined.select('originalCategory', 'value').write.format('com.databricks.spark.csv').save('/result',header = 'false')
